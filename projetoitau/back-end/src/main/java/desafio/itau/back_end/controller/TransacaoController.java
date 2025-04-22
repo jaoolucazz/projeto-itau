@@ -27,7 +27,7 @@ public class TransacaoController {
 
     @PostMapping
     public ResponseEntity<Void> criarTransacao(@Valid @RequestBody RequisicaoDeTransacao requisicao){
-        if (requisicao.getDataHora().isAfter(OffsetDateTime.now())){
+        if (requisicao.getDataHora().isAfter(OffsetDateTime.now()) || requisicao.getValor() <= 0 ){
             return ResponseEntity.unprocessableEntity().build();
         }
         transacaoService.addTransacao(new Transacao(requisicao.getValor(), requisicao.getDataHora()));
